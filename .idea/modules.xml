@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/spring-reactive-redis/spring-reactive-redis.iml" filepath="$PROJECT_DIR$/spring-reactive-redis/spring-reactive-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-reactive-redis.iml" filepath="$PROJECT_DIR$/spring-reactive-redis.iml" />
     </modules>
   </component>
 </project>
