@@ -1,29 +1,26 @@
-package com.example.demo;
+package com.example.springreactiveredis.service;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.springreactiveredis.domain.Book;
+import com.example.springreactiveredis.repository.RedisBookRepository;
 import org.springframework.stereotype.Service;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class LinkService {
+public class BookService {
 
-    private final String baseUrl;
-    private final LinkRepository linkRepository;
+    private final RedisBookRepository bookRepository;
 
-    public LinkService(@Value("${app.baseUrl}") String baseUrl, LinkRepository linkRepository) {
-        this.baseUrl = baseUrl;
-        this.linkRepository = linkRepository;
+    public BookService(RedisBookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
-    Mono<String> shortenLink(String link) {
-        String randomKey = RandomStringUtils.randomAlphabetic(6);
-        return linkRepository.save(new Link(link, randomKey))
-                             .map(result -> baseUrl + result.getKey());
+    public Mono<Book> create(Book book) {
+        return bookRepository.save(book);
     }
 
-    Mono<Link> getOriginalLink(String key) {
-        return linkRepository.findByKey(key);
+    public Flux<Book> getAll(){
+        return bookRepository.getAll();
     }
 }

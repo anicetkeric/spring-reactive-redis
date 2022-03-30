@@ -1,10 +1,12 @@
-package com.example.demo;
+package com.example.springreactiveredis.repository;
 
+import com.example.springreactiveredis.domain.Book;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface BookRepository {
 
-    Mono<Link> save(Link link);
+    Mono<Book> save(Book book);
 
-    Mono<Link> findByKey(String key);
+    Flux<Book> getAll();
 }
