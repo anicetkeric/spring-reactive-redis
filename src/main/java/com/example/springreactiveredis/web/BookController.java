@@ -27,7 +27,7 @@ public class BookController {
 
     }
 
-    @GetMapping("/Books")
+    @GetMapping("/book")
     public Flux<Book> getAllBooks() {
         return bookService.getAll();
     }

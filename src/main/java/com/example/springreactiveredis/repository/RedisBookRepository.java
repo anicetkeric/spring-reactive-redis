@@ -14,9 +14,9 @@ public class RedisBookRepository implements BookRepository {
 
     private static final String BOOK_KEY = "BK";
 
-    private final ReactiveRedisOperations<String, Book> redisOperations;
+    private final ReactiveRedisOperations<String, Object> redisOperations;
 
-    public RedisBookRepository(ReactiveRedisOperations<String, Book> redisOperations) {
+    public RedisBookRepository(ReactiveRedisOperations<String, Object> redisOperations) {
         this.redisOperations = redisOperations;
     }
 

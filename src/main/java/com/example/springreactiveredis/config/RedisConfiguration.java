@@ -1,8 +1,8 @@
 package com.example.springreactiveredis.config;
 
-import com.example.springreactiveredis.domain.Book;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
@@ -11,24 +11,35 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.util.Objects;
+
 @Configuration
 public class RedisConfiguration {
 
+    private final Environment env;
+
+    public RedisConfiguration(Environment env) {
+        this.env = env;
+    }
+
     @Bean
     public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
-        return new LettuceConnectionFactory("127.0.0.1", 6379);
+        return new LettuceConnectionFactory(Objects.requireNonNull(env.getProperty("spring.redis.host")), Integer.parseInt(Objects.requireNonNull(env.getProperty("spring.redis.port"))));
     }
 
 
     @Bean
-    public ReactiveRedisOperations<String, Book> redisOperations(ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
-        Jackson2JsonRedisSerializer<Book> serializer = new Jackson2JsonRedisSerializer<>(Book.class);
+    public ReactiveRedisOperations<String, Object> redisOperations(ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
+        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
 
-        RedisSerializationContext.RedisSerializationContextBuilder<String, Book> builder =
+        RedisSerializationContext.RedisSerializationContextBuilder<String, Object> builder =
                 RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
 
-        RedisSerializationContext<String, Book> context = builder.value(serializer).hashValue(serializer).build();
+        RedisSerializationContext<String, Object> context = builder.value(serializer).hashValue(serializer)
+                .hashKey(serializer).build();
 
         return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, context);
     }
+
+
 }
