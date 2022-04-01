@@ -8,5 +8,7 @@ public interface BookRepository {
 
     Mono<Book> save(Book book);
 
+    Mono<Book> get(String key);
+
     Flux<Book> getAll();
 }

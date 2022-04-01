@@ -23,4 +23,8 @@ public class BookService {
     public Flux<Book> getAll(){
         return bookRepository.getAll();
     }
+
+    public Mono<Book> getOne(String id){
+        return bookRepository.get(id);
+    }
 }

@@ -31,5 +31,9 @@ public class BookController {
     public Flux<Book> getAllBooks() {
         return bookService.getAll();
     }
+    @GetMapping("/book/{id}")
+    public Mono<Book> getBook(@PathVariable String id) {
+        return bookService.getOne(id);
+    }
 
 }
