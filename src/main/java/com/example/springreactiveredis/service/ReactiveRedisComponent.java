@@ -20,7 +20,14 @@ public class ReactiveRedisComponent {
     }
 
 
-    public Mono<Object> put(String key, String hashKey, Object val) {
+    /**
+     * Set key and value into a hash key
+     * @param key key value - must not be null.
+     * @param hashKey hash key value -  must not be null.
+     * @param val Object value
+     * @return Mono of object
+     */
+    public Mono<Object> set(String key, String hashKey, Object val) {
         return redisOperations.opsForHash().put(key, hashKey, val).map(b -> val);
     }
     /**
@@ -50,10 +57,5 @@ public class ReactiveRedisComponent {
     public Mono<Long> remove(String key, Object hashKey) {
         return redisOperations.opsForHash().remove(key, hashKey);
     }
-
-    public Mono<Boolean> hasKey(String key) {
-        return redisOperations.hasKey(key);
-    }
-
 
 }

@@ -1,36 +1,34 @@
 package com.example.springreactiveredis.repository;
 
+import com.example.springreactiveredis.config.ObjectMapperUtils;
 import com.example.springreactiveredis.domain.Book;
 import com.example.springreactiveredis.service.ReactiveRedisComponent;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Repository
-public class RedisBookRepository implements BookRepository {
+import static com.example.springreactiveredis.config.ObjectMapperUtils.BOOK_KEY;
 
-    private static final String BOOK_KEY = "BK";
+@Repository
+@RequiredArgsConstructor
+public class RedisBookRepository implements BookRepository {
 
     private final ReactiveRedisComponent reactiveRedisComponent;
 
-    public RedisBookRepository(ReactiveRedisComponent reactiveRedisComponent) {
-        this.reactiveRedisComponent = reactiveRedisComponent;
-    }
-
     @Override
     public Mono<Book> save(Book book) {
-        return reactiveRedisComponent.put(BOOK_KEY, book.getId(), book).map(b -> book);
+        return reactiveRedisComponent.set(BOOK_KEY, book.getId(), book).map(b -> book);
     }
 
     @Override
     public Mono<Book> get(String key) {
-        return reactiveRedisComponent.get(BOOK_KEY, key);
+        return reactiveRedisComponent.get(BOOK_KEY, key).flatMap(d -> Mono.just(ObjectMapperUtils.objectMapper(d, Book.class)));
     }
 
     @Override
     public Flux<Book> getAll(){
-        return reactiveRedisComponent.get(BOOK_KEY).map(x -> new ObjectMapper().convertValue(x, Book.class))
+        return reactiveRedisComponent.get(BOOK_KEY).map(b -> ObjectMapperUtils.objectMapper(b, Book.class))
                 .collectList().flatMapMany(Flux::fromIterable);
     }
 }
