@@ -2,7 +2,6 @@ package com.example.springreactiveredis.repository;
 
 import com.example.springreactiveredis.config.ObjectMapperUtils;
 import com.example.springreactiveredis.domain.Book;
-import com.example.springreactiveredis.service.ReactiveRedisComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

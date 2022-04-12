@@ -1,4 +1,4 @@
-package com.example.springreactiveredis.service;
+package com.example.springreactiveredis.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
@@ -18,7 +18,6 @@ public class ReactiveRedisComponent {
     public ReactiveRedisComponent(ReactiveRedisOperations<String, Object> redisOperations) {
         this.redisOperations = redisOperations;
     }
-
 
     /**
      * Set key and value into a hash key
