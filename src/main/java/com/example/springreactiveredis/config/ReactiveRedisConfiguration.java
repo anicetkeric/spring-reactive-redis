@@ -14,11 +14,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.util.Objects;
 
 @Configuration
-public class RedisConfiguration {
+public class ReactiveRedisConfiguration {
 
     private final Environment env;
 
-    public RedisConfiguration(Environment env) {
+    public ReactiveRedisConfiguration(Environment env) {
         this.env = env;
     }
 

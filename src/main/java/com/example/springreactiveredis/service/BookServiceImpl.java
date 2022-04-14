@@ -28,4 +28,9 @@ public class BookServiceImpl implements BookService {
     public Mono<Book> getOne(String id){
         return bookRepository.get(id);
     }
+
+    @Override
+    public Mono<Long> deleteById(String id) {
+        return bookRepository.delete(id);
+    }
 }

@@ -30,4 +30,9 @@ public class RedisBookRepository implements BookRepository {
         return reactiveRedisComponent.get(BOOK_KEY).map(b -> ObjectMapperUtils.objectMapper(b, Book.class))
                 .collectList().flatMapMany(Flux::fromIterable);
     }
+
+    @Override
+    public Mono<Long> delete(String id) {
+        return reactiveRedisComponent.remove(BOOK_KEY,id);
+    }
 }

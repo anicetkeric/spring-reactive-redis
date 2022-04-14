@@ -11,4 +11,6 @@ public interface BookService {
     Flux<Book> getAll();
 
     Mono<Book> getOne(String id);
+
+    Mono<Long> deleteById(String id);
 }

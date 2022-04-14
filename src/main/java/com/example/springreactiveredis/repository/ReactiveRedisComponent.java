@@ -56,5 +56,4 @@ public class ReactiveRedisComponent {
     public Mono<Long> remove(String key, Object hashKey) {
         return redisOperations.opsForHash().remove(key, hashKey);
     }
-
 }

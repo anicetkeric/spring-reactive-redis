@@ -22,7 +22,6 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Book> addBook(@RequestBody @Valid Book book) {
         return bookService.create(book);
-
     }
 
     @GetMapping("/book")
@@ -33,6 +32,11 @@ public class BookController {
     @GetMapping("/book/{id}")
     public Mono<Book> getBook(@PathVariable String id) {
         return bookService.getOne(id);
+    }
+
+    @DeleteMapping("/book/{id}")
+    public Mono<Long> deleteBook(@PathVariable String id) {
+        return bookService.deleteById(id);
     }
 
 }

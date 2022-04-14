@@ -11,4 +11,6 @@ public interface BookRepository {
     Mono<Book> get(String key);
 
     Flux<Book> getAll();
+
+    Mono<Long> delete(String id);
 }
